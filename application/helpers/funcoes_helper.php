@@ -34,6 +34,8 @@ function init_painel(){
 	$CI->load->library(array('parser','sistema', 'session', 'form_validation'));
 	$CI->load->helper(array('form','url','array','text'));
 	//carregamento dos models
+	$CI->load->model('usuarios_model', 'usuarios');
+	
 	set_tema('titulo_padrao', 'Gerenciamento de Sistema');
 	set_tema('rodape', '<p>&copy;'.date("Y").' | Todos os direitos reservados para <a href="http://rbtech.info">RBTech.info</a></p>');
 	set_tema('template', 'painel_view');
@@ -90,6 +92,10 @@ function load_JS($arquivo=NULL, $pasta='js', $remoto=FALSE){
 	return $retorno;	
 } 
 
+//mostra erros de validação em forms
+function erros_validacao(){
+	if (validation_errors())echo '<div class="alert-box alert">'.validation_errors('<p>','</p>').'</div>';
+}
 
 
 
