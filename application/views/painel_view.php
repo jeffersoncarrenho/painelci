@@ -3,13 +3,15 @@
 <head>
 	<meta charset="UTF-8" />
 	<title><?php if(isset($titulo)):?>{titulo} | <?php endif;?> {titulo_padrao}</title>
-	<link rel="stylesheet" href="css/foundation.min.css" />
-	<link rel="stylesheet" href="css/app.css" />
+	{headerinc}
+	
 </head>
 <body>
-{conteudo}
+<div class="row paineladm">
+	{conteudo}
+</div>
 
-<script src="js/foundation.min.js"></script>
+{footerinc}
 {rodape}
 </body>
 </html>
