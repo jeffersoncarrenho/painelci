@@ -4,21 +4,18 @@ class Usuarios extends CI_Controller {
 	
 	public function __construct(){
 		parent::__construct();
-		$this->load->library('sistema');
+		init_painel();
 	}
 
-	public function index()
-	{
+	public function index(){
 		$this->load->view('nomeview');
 	}
 	
 	public function login(){
 		//carregar o modulo usuarios e mostrar a tela de login
-		$tema['titulo']= 'Login';
-		$tema['conteudo']= load_modulo('usuarios','login');
-		$this->load->view('painel_view', $tema);
+		set_tema('titulo', 'Login');
+		set_tema('conteudo', load_modulo('usuarios','login'));
+		set_tema('rodape', '<p>Novo Rodapé</p>', FALSE);
+		load_template();
 	}
 }
-
-/* End of file welcome.php */
-/* Location: ./application/controllers/welcome.php */
