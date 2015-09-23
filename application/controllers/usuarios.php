@@ -19,7 +19,15 @@ class Usuarios extends CI_Controller {
 			$senha = md5($this->input->post('senha', TRUE));
 			
 			if ($this->usuarios->do_login($usuario, $senha)==TRUE) {
-				echo 'Login ok';
+				$query = $this->usuarios->get_bylogin($usuario)->row();
+				$dados = array(
+					'user_id' => $query->id,
+					'user_nome' => $query->nome,
+					'user_admin' => $query->adm,
+					'user_logado' => TRUE,
+				);
+				$this->session->set_userdata($dados);
+				redirect('painel');
 			} else {
 				echo 'Login falhou';
 			}
