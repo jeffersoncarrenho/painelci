@@ -56,4 +56,33 @@ class Usuarios extends CI_Controller {
 		redirect('usuarios/login');
 	}
 	
+	public function nova_senha(){
+		$this->form_validation->set_rules('email', 'EMAIL', 'trim|required|strtolower|valid_email');
+		if ($this->form_validation->run()==TRUE){
+			$email = $this->input->post('email');
+			$query = $this->usuarios->get_byemail($email);
+			if ($query->num_rows()==1) {
+				$novasenha = substr(str_shuffle('qwertyuiopasdfghjklzxcvbnm0123456789'), 0,6);
+				$mensagem = "<p>Você solicitou uma nova senha para o acesso ao painel de administração do site, a partir de agora use a seguinte senha para acesso: <strong>$novasenha</strong></p><p> Troque essa senha para uma senha segura e de sua preferência o quanto antes.</p>";
+				if ($this->sistema->enviar_email($email, 'Nova senha de acesso', $mensagem)) {
+					$dados['senha'] = md5($novasenha);
+					$this->usuarios->do_update($dados, array('email'=>$email), FALSE);
+					set_msg('msgok','Uma nova senha foi enviada para seu email. Senha: <strong>'.$novasenha.'</strong>', 'sucesso');
+					redirect('usuarios/nova_senha');
+				} else {
+					set_msg('msgerro','Erro ao enviar a nova senha, contate o administrador', 'erro');
+					redirect('usuarios/nova_senha');
+				}				
+			} else {
+				set_msg('msgerro','Este email não possui cadsatro no sistema', 'erro');
+				redirect('usuarios/nova_senha');
+			}
+						
+		}
+		set_tema('titulo', 'Recuperar Senha');
+		set_tema('conteudo', load_modulo('usuarios','nova_senha'));
+		set_tema('rodape', '');
+		load_template();
+	}
+	
 }

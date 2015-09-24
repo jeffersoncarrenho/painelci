@@ -5,9 +5,9 @@ switch ($tela) {
 		echo '<div class="four columns centered">';
 		echo form_open('usuarios/login', array('class'=>'custom loginform'));
 		echo form_fieldset('Identifique-se');
-		erros_validacao();
 		get_msg('logoffok');
 		get_msg('errologin');
+		erros_validacao();
 		echo form_label('Usuário');
 		echo form_input(array('name'=>'usuario'), set_value('usuario'), 'autofocus');
 		echo form_label('Senha');
@@ -17,7 +17,21 @@ switch ($tela) {
 		echo form_fieldset_close();
 		echo '</div>';		
 		break;
-	
+		
+	case 'nova_senha':
+		echo '<div class="four columns centered">';
+		echo form_open('usuarios/nova_senha', array('class'=>'custom loginform'));
+		echo form_fieldset('Recuperação de Senha');
+		get_msg('msgok');
+		get_msg('erro');
+		erros_validacao();
+		echo form_label('Seu Email');
+		echo form_input(array('name'=>'email'), set_value('email'), 'autofocus');
+		echo form_submit(array('name'=>'novasenha', 'class'=>'button radius right'), 'Enviar Nova Senha');
+		echo '<p>'.anchor('usuarios/login', 'Fazer Login').'</p>';
+		echo form_fieldset_close();
+		echo '</div>';		
+		break;
 	default:
 		echo '<div class="alert-box alert"><p>A tela solicitada não existe</p></div>';
 		break;
