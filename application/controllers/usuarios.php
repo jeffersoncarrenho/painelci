@@ -29,7 +29,17 @@ class Usuarios extends CI_Controller {
 				$this->session->set_userdata($dados);
 				redirect('painel');
 			} else {
-				echo 'Login falhou';
+				$query = $this->usuarios->get_bylogin($usuario)->row();
+				if (empty($query)) {
+					set_msg('errologin', 'Usuário inexistente', 'erro');					
+				} elseif($query->senha!=$senha) {
+					set_msg('errologin', 'Senha está incorreta', 'erro');
+				}elseif($query->ativo==0){
+					set_msg('errologin', 'Este usuário está inativo', 'erro');
+				}else{
+					set_msg('errologin', 'Erro desconhecido, contate o desenvolvedor', 'erro');
+				}
+				redirect('usuarios/login');
 			}
 		}
 		set_tema('titulo', 'Login');
@@ -37,4 +47,13 @@ class Usuarios extends CI_Controller {
 		set_tema('rodape', '');
 		load_template();
 	}
+	
+	public function logoff(){
+		$this->session->unset_userdata(array('user_id'=>'', 'user_nome'=>'','user_admin'=>'', 'user_logado'=>''));
+		$this->session->sess_destroy();
+		$this->session->sess_create();
+		set_msg('logoffok', 'Logoff efetuado com sucesso', 'sucesso');
+		redirect('usuarios/login');
+	}
+	
 }
