@@ -2,6 +2,16 @@
 
 class Usuarios_model extends CI_Model {
 	
+	
+	public function do_insert($dados=NULL, $redir=TRUE){
+		if ($dados!=NULL) {
+			$this->db->insert('usuarios', $dados);
+			set_msg('msgok', 'Cadastro efetuado com sucesso', 'sucesso');
+			if ($redir) redirect(current_url());
+		}
+		
+	}
+	
 	public function do_update($dados=NULL, $condicao=NULL, $redir=TRUE){
 		if ($dados!=NULL && is_array($condicao)) {
 			$this->db->update('usuarios', $dados, $condicao);

@@ -15,6 +15,7 @@ switch ($tela) {
 		echo form_submit(array('name'=>'logar', 'class'=>'button radius right'), 'Login');
 		echo '<p>'.anchor('usuarios/nova_senha', 'Esqueci minha senha').'</p>';
 		echo form_fieldset_close();
+		echo form_close();
 		echo '</div>';		
 		break;
 		
@@ -23,13 +24,37 @@ switch ($tela) {
 		echo form_open('usuarios/nova_senha', array('class'=>'custom loginform'));
 		echo form_fieldset('Recuperação de Senha');
 		get_msg('msgok');
-		get_msg('erro');
+		get_msg('msgerro');
 		erros_validacao();
 		echo form_label('Seu Email');
 		echo form_input(array('name'=>'email'), set_value('email'), 'autofocus');
 		echo form_submit(array('name'=>'novasenha', 'class'=>'button radius right'), 'Enviar Nova Senha');
 		echo '<p>'.anchor('usuarios/login', 'Fazer Login').'</p>';
 		echo form_fieldset_close();
+		echo form_close();
+		echo '</div>';		
+		break;
+	case 'cadastrar':
+		echo '<div class="twelve columns">';
+		erros_validacao();
+		get_msg('msgok');
+		echo form_open('usuarios/cadastrar', array('class'=>'custom'));
+		echo form_fieldset('Cadastrar Usuário');
+		echo form_label('Nome Completo');
+		echo form_input(array('name'=>'nome','class'=>'five'), set_value('nome'), 'autofocus');
+		echo form_label('Email');
+		echo form_input(array('name'=>'email','class'=>'five'), set_value('email'));
+		echo form_label('Login');
+		echo form_input(array('name'=>'login','class'=>'three'), set_value('login'));
+		echo form_label('Senha');
+		echo form_password(array('name'=>'senha','class'=>'three'), set_value('senha'));
+		echo form_label('Repita a Senha');
+		echo form_password(array('name'=>'senha2','class'=>'three'), set_value('senha2'));
+		echo form_checkbox(array('name'=>'adm'), '1').'Dar poderes administrativos a este usuário <br /><br />';
+		echo anchor('usuarios/gerenciar', 'Cancelar', array('class'=>'button radius alert espaco'));
+		echo form_submit(array('name'=>'cadastra', 'class'=>'button radius'), 'Salvar Dados');
+		echo form_fieldset_close();
+		echo form_close();
 		echo '</div>';		
 		break;
 	default:
