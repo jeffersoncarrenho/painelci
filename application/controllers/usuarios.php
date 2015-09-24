@@ -104,5 +104,31 @@ class Usuarios extends CI_Controller {
 		set_tema('conteudo', load_modulo('usuarios', 'cadastrar'));
 		load_template();
 	}
+
+	public function gerenciar(){
+		esta_logado();
+		set_tema('footerinc', load_JS(array('data-table','table')),FALSE);
+		set_tema('titulo', 'Listagem de Usuários');
+		set_tema('conteudo', load_modulo('usuarios', 'gerenciar'));
+		load_template();
+	}
 	
 }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

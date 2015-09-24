@@ -57,7 +57,59 @@ switch ($tela) {
 		echo form_close();
 		echo '</div>';		
 		break;
+	case 'gerenciar':
+		?>
+		<div class="twelve columns">
+			<table class="twelve data-table">
+				<thead>
+					<tr>
+						<th>Nome</th>
+						<th>Login</th>
+						<th>Email</th>
+						<th>Ativo / Adm</th>
+						<th class="text-center">Ações</th>
+					</tr>
+				</thead>
+				<tbody>
+					<?php 
+						$query = $this->usuarios->get_all()->result();
+						foreach ($query as $linha) {
+							echo '<tr>';
+							printf('<td>%s</td>', $linha->nome);
+							printf('<td>%s</td>', $linha->login);
+							printf('<td>%s</td>', $linha->email);
+							printf('<td>%s / %s</td>', ($linha->ativo==0)?'Não':'Sim', ($linha->adm==0)?'Não':'Sim' );
+							printf('<td class="text-center">%s%s%s</td>', 
+									anchor("usuarios/editar/$linha->id", ' ', array('class'=>'table-actions table-edit','title'=>'Editar')), 
+									anchor("usuarios/alterar_senha/$linha->id", ' ', array('class'=>'table-actions table-pass','title'=>'Altera Senha' )),
+									anchor("usuarios/excluir/$linha->id", ' ', array('class'=>'table-actions table-delete','title'=>'Excluir' ))
+									);
+							echo '</tr>';
+						}
+					?>
+				</tbody>
+			</table>				
+		</div>
+		<?php
+		break;
+		
 	default:
 		echo '<div class="alert-box alert"><p>A tela solicitada não existe</p></div>';
 		break;
 }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
