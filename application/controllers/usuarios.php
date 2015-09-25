@@ -8,7 +8,7 @@ class Usuarios extends CI_Controller {
 	}
 
 	public function index(){
-		$this->load->view('nomeview');
+		$this->gerenciar();
 	}
 	
 	public function login(){
@@ -17,7 +17,7 @@ class Usuarios extends CI_Controller {
 		if ($this->form_validation->run()==TRUE){
 			$usuario = $this->input->post('usuario', TRUE);
 			$senha = md5($this->input->post('senha', TRUE));
-			
+			$redirect = $this->input->post('redirect', TRUE);
 			if ($this->usuarios->do_login($usuario, $senha)==TRUE) {
 				$query = $this->usuarios->get_bylogin($usuario)->row();
 				$dados = array(
@@ -27,7 +27,11 @@ class Usuarios extends CI_Controller {
 					'user_logado' => TRUE,
 				);
 				$this->session->set_userdata($dados);
-				redirect('painel');
+				if ($redirect != '') {
+					redirect($redirect);
+				} else {
+					redirect('painel');	
+				}				
 			} else {
 				$query = $this->usuarios->get_bylogin($usuario)->row();
 				if (empty($query)) {

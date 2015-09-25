@@ -12,6 +12,7 @@ switch ($tela) {
 		echo form_input(array('name'=>'usuario'), set_value('usuario'), 'autofocus');
 		echo form_label('Senha');
 		echo form_password(array('name'=>'senha'), set_value('senha'));
+		echo form_hidden('redirect', $this->session->userdata('redir_para'));
 		echo form_submit(array('name'=>'logar', 'class'=>'button radius right'), 'Login');
 		echo '<p>'.anchor('usuarios/nova_senha', 'Esqueci minha senha').'</p>';
 		echo form_fieldset_close();
@@ -36,6 +37,7 @@ switch ($tela) {
 		break;
 	case 'cadastrar':
 		echo '<div class="twelve columns">';
+		echo breadcrumb();
 		erros_validacao();
 		get_msg('msgok');
 		echo form_open('usuarios/cadastrar', array('class'=>'custom'));
@@ -68,6 +70,7 @@ switch ($tela) {
 				});
 			</script>
 			<?php 
+				echo breadcrumb();
 				get_msg('msgok');
 				get_msg('msgerro');
 			?>
@@ -111,6 +114,7 @@ switch ($tela) {
 		}?>
 			<div class="twelve columns">
 			  <?php 
+			  	echo breadcrumb();
 			  	if (is_admin() || $iduser == $this->session->userdata('user_id')){
 					$query = $this->usuarios->get_byid($iduser)->row();
 					erros_validacao();
@@ -149,6 +153,7 @@ switch ($tela) {
 		}?>
 			<div class="twelve columns">
 			  <?php 
+			  	echo breadcrumb();
 			  	if (is_admin() || $iduser == $this->session->userdata('user_id')){
 					$query = $this->usuarios->get_byid($iduser)->row();
 					erros_validacao();

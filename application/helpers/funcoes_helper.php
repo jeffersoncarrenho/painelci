@@ -107,6 +107,7 @@ function esta_logado($redir=TRUE){
 		//$CI->session->sess_destroy();
 		//$CI->session->sess_create();
 		if ($redir) {
+			$CI->session->set_userdata(array('redir_para'=>current_url()));
 			set_msg('errologin', 'Acesso restrito, faça login antes de proseguir', 'erro');
 			redirect('usuarios/login');
 		} else {
@@ -159,7 +160,24 @@ function is_admin($set_msg=FALSE){
 		return TRUE;
 	}
 }
-
+//gera um breadcrumb com base no controller atual
+function breadcrumb(){
+	$CI =& get_instance();
+	$CI->load->helper('url');
+	$classe = ucfirst($CI->router->class);
+	if ($classe=='Painel'){
+		$classe = anchor($CI->router->class, 'Início');
+	} else {
+		$classe = anchor($CI->router->class, $classe);
+	}
+	$metodo = ucwords(str_replace('_', ' ', $CI->router->method));
+	if ($metodo && $metodo!='Index'){
+		$metodo = " &raquo; " . anchor($CI->router->class."/".$CI->router->method, $metodo);
+	} else {
+		$metodo = '';
+	}
+	return '<p>Sua Localização: '. anchor('painel', 'Painel').' &raquo; '.$classe.$metodo.'</p>';
+}
 
 
 
