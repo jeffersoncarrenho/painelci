@@ -152,7 +152,7 @@ function is_admin($set_msg=FALSE){
 	$CI =& get_instance();
 	$user_admin = $CI->session->userdata('user_admin');
 	if (!isset($user_admin) || $user_admin!=TRUE) {
-		if($set_msg) set_msg('erro', 'Seu usuário não tem permissão para executar esta operação','erro');
+		if($set_msg) set_msg('msgerro', 'Seu usuário não tem permissão para executar esta operação','erro');
 		return FALSE;
 	} else {
 		return TRUE;

@@ -60,6 +60,10 @@ switch ($tela) {
 	case 'gerenciar':
 		?>
 		<div class="twelve columns">
+			<?php 
+				get_msg('msgok');
+				get_msg('msgerro');
+			?>
 			<table class="twelve data-table">
 				<thead>
 					<tr>
@@ -92,7 +96,43 @@ switch ($tela) {
 		</div>
 		<?php
 		break;
+	case 'alterar_senha':
+		$iduser = $this->uri->segment(3);
+		if ($iduser==NULL){
+			set_msg('msgerro', 'Escolha um usuário para alterar', 'erro');
+			redirect('usuarios/gerenciar');
+		}?>
+			<div class="twelve columns">
+			  <?php 
+			  	if (is_admin(TRUE) || $iduser == $this->session->userdata('user_id')){
+					$query = $this->usuarios->get_byid($iduser)->row();
+					erros_validacao();
+					get_msg('msgok');
+					echo form_open(current_url(), array('class'=>'custom'));
+					echo form_fieldset('Alterar senha');
+					echo form_label('Nome Completo');
+					echo form_input(array('name'=>'nome','class'=>'five','disabled'=>'disabled'), set_value('nome', $query->nome));
+					echo form_label('Email');
+					echo form_input(array('name'=>'email','class'=>'five','disabled'=>'disabled'), set_value('email', $query->email));
+					echo form_label('Login');
+					echo form_input(array('name'=>'login','class'=>'three','disabled'=>'disabled'), set_value('login', $query->login));
+					echo form_label('Nova Senha');
+					echo form_password(array('name'=>'senha','class'=>'three'), set_value('senha'), 'autofocus');
+					echo form_label('Repita a Senha');
+					echo form_password(array('name'=>'senha2','class'=>'three'), set_value('senha2'));
+					echo anchor('usuarios/gerenciar', 'Cancelar', array('class'=>'button radius alert espaco'));
+					echo form_submit(array('name'=>'alterarsenha', 'class'=>'button radius'), 'Salvar Dados');
+					echo form_hidden('idusuario', $iduser);
+					echo form_fieldset_close();
+					echo form_close();  
+				  } else {
+					 redirect('usuarios/gerenciar'); 
+				  }				  
+			  ?>
+			</div>
 		
+		<?php
+		break;		
 	default:
 		echo '<div class="alert-box alert"><p>A tela solicitada não existe</p></div>';
 		break;

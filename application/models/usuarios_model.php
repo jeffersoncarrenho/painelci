@@ -58,6 +58,17 @@ class Usuarios_model extends CI_Model {
 		
 	}
 	
+	public function get_byid($id=NULL){
+		if ($id!=NULL) {
+			$this->db->where('id', $id);
+			$this->db->limit(1);
+			return $this->db->get('usuarios');
+		} else {
+			return FALSE;
+		}
+		
+	}
+	
 	public function get_all(){
 		return $this->db->get('usuarios');
 	}	
