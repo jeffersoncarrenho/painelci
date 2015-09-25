@@ -6,7 +6,11 @@ class Usuarios_model extends CI_Model {
 	public function do_insert($dados=NULL, $redir=TRUE){
 		if ($dados!=NULL) {
 			$this->db->insert('usuarios', $dados);
-			set_msg('msgok', 'Cadastro efetuado com sucesso', 'sucesso');
+			if ($this->db->affected_rows()>0) {
+				set_msg('msgok', 'Cadastro efetuado com sucesso', 'sucesso');
+			}else {
+				set_msg('msgerro', 'Erro ao cadastrar usuário', 'erro');
+			}
 			if ($redir) redirect(current_url());
 		}
 		
@@ -15,8 +19,26 @@ class Usuarios_model extends CI_Model {
 	public function do_update($dados=NULL, $condicao=NULL, $redir=TRUE){
 		if ($dados!=NULL && is_array($condicao)) {
 			$this->db->update('usuarios', $dados, $condicao);
+			if ($this->db->affected_rows()>0) {
 			set_msg('msgok', 'Alteração efetuada com sucesso', 'sucesso');
+			}else {
+				set_msg('msgerro', 'Erro ao atualizar dados', 'erro');
+			}
 			if ($redir) redirect(current_url());		
+		}
+	}
+	
+	public function do_delete($condicao=NULL, $redir=TRUE){
+		if ($condicao!=NULL && is_array($condicao)) {
+			$this->db->delete('usuarios', $condicao);
+			if ($this->db->affected_rows()>0) {
+				set_msg('msgok', 'Registro excluído com sucesso', 'sucesso');
+			} else {
+				set_msg('msgerro', 'Erro ao excluir registro', 'erro');
+			}
+			
+			set_msg('msgok', 'Registro excluído com sucesso', 'sucesso');
+			if ($redir) redirect(current_url());
 		}
 	}
 	
@@ -74,18 +96,3 @@ class Usuarios_model extends CI_Model {
 	}	
 	
 }
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-

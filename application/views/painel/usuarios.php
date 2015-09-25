@@ -60,6 +60,13 @@ switch ($tela) {
 	case 'gerenciar':
 		?>
 		<div class="twelve columns">
+			<script type="text/javascript">
+				$(function(){
+					$('.deletareg').click(function(){
+						if(confirm("Deseja Realmente excluir este registro?\nEsta Operação não poderá ser desfeita!"))return true; else return false;
+					});
+				});
+			</script>
 			<?php 
 				get_msg('msgok');
 				get_msg('msgerro');
@@ -86,7 +93,7 @@ switch ($tela) {
 							printf('<td class="text-center">%s%s%s</td>', 
 									anchor("usuarios/editar/$linha->id", ' ', array('class'=>'table-actions table-edit','title'=>'Editar')), 
 									anchor("usuarios/alterar_senha/$linha->id", ' ', array('class'=>'table-actions table-pass','title'=>'Altera Senha' )),
-									anchor("usuarios/excluir/$linha->id", ' ', array('class'=>'table-actions table-delete','title'=>'Excluir' ))
+									anchor("usuarios/excluir/$linha->id", ' ', array('class'=>'table-actions table-delete deletareg','title'=>'Excluir' ))
 									);
 							echo '</tr>';
 						}

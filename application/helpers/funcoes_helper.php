@@ -40,7 +40,8 @@ function init_painel(){
 	set_tema('rodape', '<p>&copy;'.date("Y").' | Todos os direitos reservados para <a href="http://rbtech.info">RBTech.info</a></p>');
 	set_tema('template', 'painel_view');
 	set_tema('headerinc', load_CSS(array('foundation.min','app')),FALSE);
-	set_tema('footerinc', load_JS(array('foundation.min','app')),FALSE);	
+	set_tema('headerinc', load_JS(array('foundation.min','app')),FALSE);
+	set_tema('footerinc','');
 }
 
 //carrega um template passand o array $tema como parâmetro
