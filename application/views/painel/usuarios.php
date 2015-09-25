@@ -104,7 +104,7 @@ switch ($tela) {
 		}?>
 			<div class="twelve columns">
 			  <?php 
-			  	if (is_admin(TRUE) || $iduser == $this->session->userdata('user_id')){
+			  	if (is_admin() || $iduser == $this->session->userdata('user_id')){
 					$query = $this->usuarios->get_byid($iduser)->row();
 					erros_validacao();
 					get_msg('msgok');
@@ -126,30 +126,51 @@ switch ($tela) {
 					echo form_fieldset_close();
 					echo form_close();  
 				  } else {
+				  		set_msg('msgerro', 'Seu usuário não tem permissão para executar esta operação','erro');
+						redirect('usuarios/gerenciar'); 
+				  }				  
+			  ?>
+			</div>
+		
+		<?php
+		break;
+		case 'editar':
+		$iduser = $this->uri->segment(3);
+		if ($iduser==NULL){
+			set_msg('msgerro', 'Escolha um usuário para alterar', 'erro');
+			redirect('usuarios/gerenciar');
+		}?>
+			<div class="twelve columns">
+			  <?php 
+			  	if (is_admin() || $iduser == $this->session->userdata('user_id')){
+					$query = $this->usuarios->get_byid($iduser)->row();
+					erros_validacao();
+					get_msg('msgok');
+					echo form_open(current_url(), array('class'=>'custom'));
+					echo form_fieldset('Alterar Usuário');
+					echo form_label('Nome Completo');
+					echo form_input(array('name'=>'nome','class'=>'five'), set_value('nome', $query->nome), 'autofocus');
+					echo form_label('Email');
+					echo form_input(array('name'=>'email','class'=>'five','disabled'=>'disabled'), set_value('email', $query->email));
+					echo form_label('Login');
+					echo form_input(array('name'=>'login','class'=>'three','disabled'=>'disabled'), set_value('login', $query->login));
+					echo form_checkbox(array('name'=>'ativo'), '1',($query->ativo==1)?TRUE:FALSE).'Permitir o acesso deste usuário ao sistema<br /><br />';
+					echo form_checkbox(array('name'=>'adm'), '1', ($query->adm==1)?TRUE:FALSE).'Dar poderes administrativos a este usuário <br /><br />';
+					echo anchor('usuarios/gerenciar', 'Cancelar', array('class'=>'button radius alert espaco'));
+					echo form_submit(array('name'=>'editar', 'class'=>'button radius'), 'Salvar Dados');
+					echo form_hidden('idusuario', $iduser);
+					echo form_fieldset_close();
+					echo form_close();  
+				  } else {
+				  	set_msg('msgerro', 'Seu usuário não tem permissão para executar esta operação','erro');
 					 redirect('usuarios/gerenciar'); 
 				  }				  
 			  ?>
 			</div>
 		
 		<?php
-		break;		
+		break;			
 	default:
 		echo '<div class="alert-box alert"><p>A tela solicitada não existe</p></div>';
 		break;
 }
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-

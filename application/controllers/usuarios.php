@@ -116,6 +116,7 @@ class Usuarios extends CI_Controller {
 	
 	public function alterar_senha(){
 		esta_logado();
+		$this->form_validation->set_message('matches', 'O campo %s está diferente do campo %s');
 		$this->form_validation->set_rules('senha', 'SENHA', 'trim|required|min_length[4]|strtolower');
 		$this->form_validation->set_rules('senha2', 'REPITA A SENHA', 'trim|required|min_length[4]|strtolower|matches[senha]');
 		if($this->form_validation->run()==TRUE){
@@ -126,24 +127,18 @@ class Usuarios extends CI_Controller {
 		set_tema('conteudo', load_modulo('usuarios', 'alterar_senha'));
 		load_template();
 	}
-	
+	public function editar(){
+		esta_logado();
+		$this->form_validation->set_rules('nome', 'NOME', 'trim|required|ucwords');
+		if($this->form_validation->run()==TRUE){
+			$dados['nome'] = $this->input->post('nome');
+			$dados['ativo'] = ($this->input->post('ativo')==1 ? 1:0);
+			if (is_admin()) $dados['adm'] = ($this->input->post('adm')==1) ? 1 : 0;
+			$this->usuarios->do_update($dados, array('id'=>$this->input->post('idusuario')));
+		}
+		set_tema('titulo', 'Alteração de usuários');
+		set_tema('conteudo', load_modulo('usuarios', 'editar'));
+		load_template();
+	}
 	
 }
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
