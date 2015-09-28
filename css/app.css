@@ -1,7 +1,9 @@
 .loginform{	margin-top:150px;}
 .alert-box p{margin: 0!important;}
 .espaco{margin-right:10px;padding:8px 20px 9px;}
+/*forms*/
 fieldset{padding:1.5%;}
+input[type="file"]{display:block;font-size:14px;margin:0 0 12px 0; padding:6px;}
 
 /*tabelas*/
 table.data-table{margin-bottom:-2px!important;}

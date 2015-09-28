@@ -32,6 +32,13 @@
 						</ul>
 					</li>
 					<li class="has-flyout">
+						<?php echo anchor('midia/gerenciar', 'Midia'); ?>
+						<ul class="flyout">
+							<li><?php echo anchor('midia/cadastrar', 'Cadastrar'); ?></li>
+							<li><?php echo anchor('midia/gerenciar', 'Gerenciar'); ?></li>
+						</ul>
+					</li>
+					<li class="has-flyout">
 						<a href="#">Administração</a>
 						<ul class="flyout">
 							<li><?php echo anchor('auditoria/gerenciar', 'Auditoria'); ?></li>
