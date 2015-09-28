@@ -39,6 +39,13 @@
 						</ul>
 					</li>
 					<li class="has-flyout">
+						<?php echo anchor('paginas/gerenciar', 'Páginas'); ?>
+						<ul class="flyout">
+							<li><?php echo anchor('paginas/cadastrar', 'Cadastrar'); ?></li>
+							<li><?php echo anchor('paginas/gerenciar', 'Gerenciar'); ?></li>
+						</ul>
+					</li>
+					<li class="has-flyout">
 						<a href="#">Administração</a>
 						<ul class="flyout">
 							<li><?php echo anchor('auditoria/gerenciar', 'Auditoria'); ?></li>

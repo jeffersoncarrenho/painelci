@@ -44,6 +44,22 @@ function init_painel(){
 	set_tema('footerinc','');
 }
 
+//Inicializa o Tiny MCE para criação de textarea com editor html
+function init_hmtmleditor(){
+	set_tema('footerinc', load_JS(base_url('htmleditor/tiny_mce.js'), NULL, TRUE), FALSE);
+	set_tema('footerinc', load_JS(base_url('htmleditor/init_tiny_mce.js'), NULL, TRUE), FALSE);
+}
+
+//retorna ou printa o conteúdo de uma view
+function incluir_arquivo($view, $pasta='includes', $echo = TRUE){
+	$CI =& get_instance();
+	if($echo==TRUE){
+		echo $CI->load->view("$pasta/$view", '', TRUE);
+		return TRUE;
+	}
+	return $CI->load->view("$pasta/$view", '', TRUE);
+}
+
 //carrega um template passand o array $tema como parâmetro
 function load_template(){
 	$CI =& get_instance();
@@ -231,6 +247,7 @@ function thumb($imagem=NULL, $largura=100, $altura=75, $geratag=TRUE){
 	if ($geratag && $retorno!=FALSE) $retorno = '<img src="'.$retorno.'" alt="" />';
 	return $retorno;	
 }
+
 
 
 

@@ -2,7 +2,7 @@
 
 class Midia extends CI_Controller {
 	
-public function __construct(){
+	public function __construct(){
 		parent::__construct();
 		init_painel();
 		esta_logado();
