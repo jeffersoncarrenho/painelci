@@ -68,7 +68,41 @@ switch ($tela) {
 			</table>				
 		</div>
 		<?php
-		break;			
+		break;	
+		case 'editar':
+		$idmidia = $this->uri->segment(3);
+		if ($idmidia==NULL){
+			set_msg('msgerro', 'Escolha uma mídia para alterar', 'erro');
+			redirect('midia/gerenciar');
+		}?>
+			<div class="twelve columns">
+			  <?php 
+			  	echo breadcrumb();
+			  	$query = $this->midia->get_byid($idmidia)->row();
+				erros_validacao();
+				get_msg('msgok');
+				echo form_open(current_url(), array('class'=>'custom'));
+				echo form_fieldset('Alteração de Mídia');
+				echo '<div class="row">';
+				echo '<div class="six columns">';
+				echo form_label('Nome para exibição');
+				echo form_input(array('name'=>'nome','class'=>'twelve'), set_value('nome', $query->nome), 'autofocus');
+				echo form_label('Descrição');
+				echo form_input(array('name'=>'descricao','class'=>'twelve'), set_value('descricao', $query->descricao));
+				echo '</div>';
+				echo '<div class="five columns offset-by-one">';
+				echo thumb($query->arquivo, 300,180);
+				echo '</div>';
+				echo '</div>';					
+				echo anchor('midia/gerenciar', 'Cancelar', array('class'=>'button radius alert espaco'));
+				echo form_submit(array('name'=>'editar', 'class'=>'button radius'), 'Salvar Dados');
+				echo form_hidden('idmidia', $query->id);
+				echo form_fieldset_close();
+				echo form_close();
+			?>
+			</div>
+			<?php
+		break;		
 	default:
 		echo '<div class="alert-box alert"><p>A tela solicitada não existe</p></div>';
 		break;

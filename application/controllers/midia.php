@@ -38,5 +38,55 @@ public function __construct(){
 		set_tema('conteudo', load_modulo('midia', 'gerenciar'));
 		load_template();
 	}
-
+	
+	public function editar(){
+		$this->form_validation->set_rules('nome', 'NOME', 'trim|required|ucfirst');
+		$this->form_validation->set_rules('descricao', 'DESCRIÇÃO', 'trim');
+		if($this->form_validation->run()==TRUE){
+			$dados = elements(array('nome','descricao'), $this->input->post());
+			$this->midia->do_update($dados, array('id'=>$this->input->post('idmidia')));
+		}
+		set_tema('titulo', 'Alteração de mídia');
+		set_tema('conteudo', load_modulo('midia', 'editar'));
+		load_template();
+	}
+	
+	public function excluir(){
+		if (is_admin(TRUE)){
+			$idmidia = $this->uri->segment(3);
+			if ($idmidia!=NULL) {
+				$query = $this->midia->get_byid($idmidia);
+				if ($query->num_rows()==1){
+					$query = $query->row();
+					unlink('./uploads/'.$query->arquivo);
+					$thumbs = glob('./uploads/thumbs/*_'.$query->arquivo);
+					foreach ($thumbs as $arquivo) {
+						unlink($arquivo);
+					}
+					$this->midia->do_delete(array('id'=>$query->id), FALSE);
+				} 
+			}else{
+				set_msg('msgerro', 'Escolha uma mídia para excluir', 'erro');
+			}		
+		}
+		redirect('midia/gerenciar');
+	}
 }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
