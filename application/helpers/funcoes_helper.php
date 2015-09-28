@@ -179,6 +179,49 @@ function breadcrumb(){
 	return '<p>Sua Localização: '. anchor('painel', 'Painel').' &raquo; '.$classe.$metodo.'</p>';
 }
 
+//sete uma registro na tabela de auditoria
+function auditoria($operação, $obs='', $query=TRUE){
+	$CI =& get_instance();
+	$CI->load->library('session');
+	$CI->load->model('auditoria_model', 'auditoria');
+	if ($query = TRUE) {
+		$last_query = $CI->db->last_query();
+	} else {
+		$last_query = '';
+	}
+	if (esta_logado(FALSE)) {
+		$user_id = $CI->session->userdata('user_id');
+		$user_login = $CI->usuarios->get_byid($user_id)->row()->login;
+	} else {
+		$user_login = 'Desconhecido';
+	}
+	$dados = array(
+		'usuario'=> $user_login,
+		'operacao'=> $operação,
+		'query'=> $last_query,
+		'observacao'=> $obs,
+	);
+	$CI->auditoria->do_insert($dados);
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 

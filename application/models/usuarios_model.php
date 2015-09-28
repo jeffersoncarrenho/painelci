@@ -7,6 +7,7 @@ class Usuarios_model extends CI_Model {
 		if ($dados!=NULL) {
 			$this->db->insert('usuarios', $dados);
 			if ($this->db->affected_rows()>0) {
+				auditoria('Inclusão de usuários', 'Novo usuário incluído no sistema');
 				set_msg('msgok', 'Cadastro efetuado com sucesso', 'sucesso');
 			}else {
 				set_msg('msgerro', 'Erro ao cadastrar usuário', 'erro');
@@ -20,7 +21,8 @@ class Usuarios_model extends CI_Model {
 		if ($dados!=NULL && is_array($condicao)) {
 			$this->db->update('usuarios', $dados, $condicao);
 			if ($this->db->affected_rows()>0) {
-			set_msg('msgok', 'Alteração efetuada com sucesso', 'sucesso');
+				auditoria('Alteração de usuários');
+				set_msg('msgok', 'Alteração efetuada com sucesso', 'sucesso');
 			}else {
 				set_msg('msgerro', 'Erro ao atualizar dados', 'erro');
 			}
@@ -32,6 +34,7 @@ class Usuarios_model extends CI_Model {
 		if ($condicao!=NULL && is_array($condicao)) {
 			$this->db->delete('usuarios', $condicao);
 			if ($this->db->affected_rows()>0) {
+				auditoria('Exclusão de usuários');
 				set_msg('msgok', 'Registro excluído com sucesso', 'sucesso');
 			} else {
 				set_msg('msgerro', 'Erro ao excluir registro', 'erro');

@@ -27,6 +27,7 @@ class Usuarios extends CI_Controller {
 					'user_logado' => TRUE,
 				);
 				$this->session->set_userdata($dados);
+				auditoria('Login no sistema', 'Login efetuado com sucesso');
 				if ($redirect != '') {
 					redirect($redirect);
 				} else {
@@ -53,6 +54,7 @@ class Usuarios extends CI_Controller {
 	}
 	
 	public function logoff(){
+		auditoria('Logoff no sistema', 'Logoff efetuado com sucesso');
 		$this->session->unset_userdata(array('user_id'=>'', 'user_nome'=>'','user_admin'=>'', 'user_logado'=>''));
 		$this->session->sess_destroy();
 		$this->session->sess_create();
@@ -71,6 +73,7 @@ class Usuarios extends CI_Controller {
 				if ($this->sistema->enviar_email($email, 'Nova senha de acesso', $mensagem)) {
 					$dados['senha'] = md5($novasenha);
 					$this->usuarios->do_update($dados, array('email'=>$email), FALSE);
+					auditoria('Redefinição de senha', 'O usuário solicitou uma nova senha por email');
 					set_msg('msgok','Uma nova senha foi enviada para seu email. Senha: <strong>'.$novasenha.'</strong>', 'sucesso');
 					redirect('usuarios/nova_senha');
 				} else {
