@@ -247,11 +247,29 @@ function thumb($imagem=NULL, $largura=100, $altura=75, $geratag=TRUE){
 	if ($geratag && $retorno!=FALSE) $retorno = '<img src="'.$retorno.'" alt="" />';
 	return $retorno;	
 }
+//gera um slug baseado no título
+function slug($string=NULL){
+	$string =remove_acentos($string) ;//remover acentos
+	return url_title($string, '-', TRUE);
+}
 
-
-
-
-
+//remove acentos e caracteres especiais de uma string
+function remove_acentos($string=NULL){
+	$procurar 	= array('Á','À','Ã','Â','É','Ê','Í','Ó','Õ','Ô','Ú','Ü','Ç','á','à','ã','â','é','ê','í','ó','õ','ô','ú','ü','ç');
+	$substituir = array('A','A','A','A','E','E','I','O','O','O','U','U','C','a','a','a','a','e','e','i','o','o','o','u','u','c');
+	return str_replace($procurar, $substituir, $string);	
+}
+//gera o resumo de uma string
+function resumo_post($string=NULL, $palavras=50, $decodifica_html=TRUE,$remove_tags=TRUE){
+	if ($string!=NULL) {
+		if ($decodifica_html) $string = html_entity_decode($string);
+		if ($remove_tags) $string = strip_tags($string);
+		$retorno = word_limiter($string, $palavras);
+	} else {
+		$retorno = FALSE;
+	}
+	return $retorno;
+}
 
 
 

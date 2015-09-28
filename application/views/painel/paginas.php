@@ -29,10 +29,7 @@ switch ($tela) {
 				$(function(){
 					$('.deletareg').click(function(){
 						if(confirm("Deseja Realmente excluir este registro?\nEsta Operação não poderá ser desfeita!"))return true; else return false;
-					});
-					$('input').click(function(){
-						(this).select();
-					});
+					});					
 				});
 			</script>
 			<?php 
@@ -43,24 +40,23 @@ switch ($tela) {
 			<table class="twelve data-table">
 				<thead>
 					<tr>
-						<th>Nome</th>
-						<th>Link</th>
-						<th>Miniatura</th>
+						<th>Título</th>
+						<th>Slug</th>
+						<th>Resumo</th>
 						<th class="text-center">Ações</th>						
 					</tr>
 				</thead>
 				<tbody>
 					<?php 
-						$query = $this->midia->get_all()->result();
+						$query = $this->paginas->get_all()->result();
 						foreach ($query as $linha) {
 							echo '<tr>';
-							printf('<td>%s</td>', $linha->nome);
-							printf('<td><input type="text" value="%s" /></td>', base_url("uploads/$linha->arquivo"));
-							printf('<td>%s</td>', thumb($linha->arquivo));
-							printf('<td class="text-center">%s%s%s</td>', 
-									anchor("uploads/$linha->arquivo", ' ', array('class'=>'table-actions table-view','title'=>'Visualizar', 'target'=>'_blank')), 
-									anchor("midia/editar/$linha->id", ' ', array('class'=>'table-actions table-edit','title'=>'Editar' )),
-									anchor("midia/excluir/$linha->id", ' ', array('class'=>'table-actions table-delete deletareg','title'=>'Excluir' ))
+							printf('<td>%s</td>', $linha->titulo);
+							printf('<td>%s</td>', $linha->slug);
+							printf('<td>%s</td>', resumo_post($linha->conteudo, 6));
+							printf('<td class="text-center">%s%s</td>', 
+									anchor("paginas/editar/$linha->id", ' ', array('class'=>'table-actions table-edit','title'=>'Editar' )),
+									anchor("paginas'/excluir/$linha->id", ' ', array('class'=>'table-actions table-delete deletareg','title'=>'Excluir' ))
 									);
 							echo '</tr>';
 						}
