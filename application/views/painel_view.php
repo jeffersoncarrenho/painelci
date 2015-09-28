@@ -31,6 +31,12 @@
 							<li><?php echo anchor('usuarios/gerenciar', 'Gerenciar'); ?></li>
 						</ul>
 					</li>
+					<li class="has-flyout">
+						<a href="#">Administração</a>
+						<ul class="flyout">
+							<li><?php echo anchor('auditoria/gerenciar', 'Auditoria'); ?></li>
+						</ul>
+					</li>
 				</ul>
 			</div>
 		</div>
