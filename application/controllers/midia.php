@@ -34,8 +34,8 @@ public function __construct(){
 
 	public function gerenciar(){
 		set_tema('footerinc', load_JS(array('data-table','table')),FALSE);
-		set_tema('titulo', 'Registros de auditoria');
-		set_tema('conteudo', load_modulo('auditoria', 'gerenciar'));
+		set_tema('titulo', 'Listagem de Mídias');
+		set_tema('conteudo', load_modulo('midia', 'gerenciar'));
 		load_template();
 	}
 
