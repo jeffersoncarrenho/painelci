@@ -34,4 +34,35 @@ class Paginas extends CI_Controller {
 		set_tema('conteudo', load_modulo('paginas', 'gerenciar'));
 		load_template();
 	}
+
+	public function editar(){
+		$this->form_validation->set_rules('titulo', 'TÍTULO', 'trim|required|ucfirst');
+		$this->form_validation->set_rules('slug', 'SLUG', 'trim');
+		$this->form_validation->set_rules('conteudo', 'CONTEÚDO', 'trim|required|htmlentities');
+		if($this->form_validation->run()==TRUE){
+			$dados = elements(array('titulo', 'slug', 'conteudo'), $this->input->post());
+			($dados['slug']!='')? $dados['slug'] = slug($dados['slug']): $dados['slug'] = slug($dados['titulo']) ;
+			$this->paginas->do_update($dados, array('id'=>$this->input->post('idpagina')));				
+		}
+		init_hmtmleditor();
+		set_tema('titulo', 'Editar página');
+		set_tema('conteudo', load_modulo('paginas', 'editar'));
+		load_template();
+	}
+	
+	public function excluir(){
+		if (is_admin(TRUE)){
+			$idpagina = $this->uri->segment(3);
+			if ($idpagina!=NULL) {
+				$query = $this->paginas->get_byid($idpagina);
+				if ($query->num_rows()==1){
+					$query = $query->row();
+					$this->paginas->do_delete(array('id'=>$query->id), FALSE);
+				} 
+			}else{
+				set_msg('msgerro', 'Escolha uma página para excluir', 'erro');
+			}		
+		}
+		redirect('paginas/gerenciar');
+	}
 }

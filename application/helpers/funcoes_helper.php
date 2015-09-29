@@ -262,7 +262,7 @@ function remove_acentos($string=NULL){
 //gera o resumo de uma string
 function resumo_post($string=NULL, $palavras=50, $decodifica_html=TRUE,$remove_tags=TRUE){
 	if ($string!=NULL) {
-		if ($decodifica_html) $string = html_entity_decode($string);
+		if ($decodifica_html) $string = to_html($string);
 		if ($remove_tags) $string = strip_tags($string);
 		$retorno = word_limiter($string, $palavras);
 	} else {
@@ -270,7 +270,10 @@ function resumo_post($string=NULL, $palavras=50, $decodifica_html=TRUE,$remove_t
 	}
 	return $retorno;
 }
-
+//converter dados do bd para html válido
+function to_html($string=NULL){
+	return html_entity_decode($string);
+}
 
 
 
