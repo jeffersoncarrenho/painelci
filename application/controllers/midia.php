@@ -71,6 +71,25 @@ class Midia extends CI_Controller {
 		}
 		redirect('midia/gerenciar');
 	}
+	
+	public function get_imgs(){
+		header('Content-Type: application/x-json; charset=utf-8');
+		$this->db->like('nome', $this->input->post('pesquisarimg'));
+		if ($this->input->post('pesquisarimg')=='') $this->db->limit(10);
+		$this->db->order_by('id', 'DESC');
+		$query = $this->midia->get_all();
+		$retorno = 'Nenhum resultado encontrado com base em sua pesquisa';
+		if ($query->num_rows()>0) {
+			$retorno = '';
+			$query = $query->result();
+			foreach ($query as $linha) {
+				$retorno .= '<a href="javascript:;" onClick="$(\'.htmleditor\').tinymce().execCommand(\'mceInsertContent\',false,\'<img src='.base_url("uploads/$linha->arquivo").' />\');return false;">';
+				$retorno .= '<img src="'.thumb($linha->arquivo,300,180,FALSE).'" class="retornoimg" alt="'.$linha->nome.'" title="Clique para inserir" /></a>';
+				
+			}
+		}
+		echo (json_encode($retorno));
+	}	
 }
 
 

@@ -16,3 +16,6 @@ th.sorting_asc{background:url("../images/order-asc.png") right center no-repeat;
 th.sorting_desc{background:url("../images/order-desc.png") right center no-repeat;}
 /*htmleditor*/
 .mceLayout{margin-bottom:12px!important;}
+/*diversos*/
+.retorno{margin-top:10px;}
+.retorno img{margin: 0 5px 5px 0;}

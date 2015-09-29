@@ -46,8 +46,9 @@ function init_painel(){
 
 //Inicializa o Tiny MCE para criação de textarea com editor html
 function init_hmtmleditor(){
-	set_tema('footerinc', load_JS(base_url('htmleditor/tiny_mce.js'), NULL, TRUE), FALSE);
-	set_tema('footerinc', load_JS(base_url('htmleditor/init_tiny_mce.js'), NULL, TRUE), FALSE);
+	//set_tema('headerinc', load_JS(base_url('htmleditor/tiny_mce.js'), NULL, TRUE), FALSE);
+	set_tema('headerinc', load_JS(base_url('htmleditor/jquery.tinymce.js'), NULL, TRUE), FALSE);
+	set_tema('headerinc', incluir_arquivo('htmleditor', 'includes', FALSE), FALSE);
 }
 
 //retorna ou printa o conteúdo de uma view

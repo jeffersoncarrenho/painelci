@@ -6,6 +6,22 @@
 				animation:'none'
 			});
 		});
+		$('.buscarimg').click(function(){
+			var destino = "<?php echo base_url('midia/get_imgs')?>";
+			var dados = $(".buscartxt").serialize();
+			$.ajax({
+				type:"POST",
+				url: destino,
+				data: dados,
+				success: function(retorno){
+					$(".retorno").html(retorno);
+				}
+			});
+		});
+		$(".limparimg").click(function(){
+			$(".buscartxt").val('');
+			$(".retorno").html('');
+		});
 	});	
 </script>
 
