@@ -49,6 +49,7 @@
 						<a href="#">Administração</a>
 						<ul class="flyout">
 							<li><?php echo anchor('auditoria/gerenciar', 'Auditoria'); ?></li>
+							<li><?php echo anchor('settings/gerenciar', 'Configurações'); ?></li>
 						</ul>
 					</li>
 				</ul>

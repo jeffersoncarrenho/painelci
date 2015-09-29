@@ -275,8 +275,42 @@ function resumo_post($string=NULL, $palavras=50, $decodifica_html=TRUE,$remove_t
 function to_html($string=NULL){
 	return html_entity_decode($string);
 }
-
-
+//salva ou atualiza uma config no bd
+function set_setting($nome, $valor=''){
+	$CI =& get_instance();
+	$CI->load->model('settings_model', 'settings');
+	if ($CI->settings->get_bynome($nome)->num_rows()==1) {
+		if (trim($valor)=='') {
+			$CI->settings->do_delete(array('nome_config'=>$nome), FALSE);
+		} else {
+			$dados=array(
+				'nome_config'=>$nome,
+				'valor_config'=>$valor
+			);
+			$CI->settings->do_update($dados, array('nome_config'=>$nome), FALSE);
+		}		
+	} else {
+		$dados=array(
+				'nome_config'=>$nome,
+				'valor_config'=>$valor
+			);
+		$CI->settings->do_insert($dados, FALSE);
+	}
+	
+}
+//retorna uma config do bd
+function get_setting($nome){
+	$CI =& get_instance();
+	$CI->load->model('settings_model', 'settings');
+	$setting = $CI->settings->get_bynome($nome);
+	if ($setting->num_rows()==1) {
+		$setting = $setting->row();
+		return $setting->valor_config;
+	} else {
+		return NULL;
+	}	
+		
+}
 
 
 
