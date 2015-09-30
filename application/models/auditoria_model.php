@@ -6,11 +6,6 @@ class Auditoria_model extends CI_Model {
 	public function do_insert($dados=NULL, $redir=FALSE){
 		if ($dados!=NULL) {
 			$this->db->insert('auditoria', $dados);
-			if ($this->db->affected_rows()>0) {
-				set_msg('msgok', 'Cadastro efetuado com sucesso', 'sucesso');
-			}else {
-				set_msg('msgerro', 'Erro ao cadastrar usuário', 'erro');
-			}
 			if ($redir) redirect(current_url());
 		}
 		

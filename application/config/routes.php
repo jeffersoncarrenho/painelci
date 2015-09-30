@@ -37,8 +37,9 @@
 | in the URL cannot be matched to a valid route.
 |
 */
-
-$route['default_controller'] = "painel";
+$route['pagina/(:any)'] = 'site/pagina/$1';
+$route['post/(:any)'] = 'site/post/$1';
+$route['default_controller'] = "site";
 $route['404_override'] = '';
 
 

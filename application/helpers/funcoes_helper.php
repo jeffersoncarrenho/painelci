@@ -121,8 +121,6 @@ function esta_logado($redir=TRUE){
 	$CI->load->library('session');
 	$user_status = $CI->session->userdata('user_logado');
 	if (!isset($user_status) || $user_status != TRUE) {
-		//$CI->session->sess_destroy();
-		//$CI->session->sess_create();
 		if ($redir) {
 			$CI->session->set_userdata(array('redir_para'=>current_url()));
 			set_msg('errologin', 'Acesso restrito, faça login antes de proseguir', 'erro');
